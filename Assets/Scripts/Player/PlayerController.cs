@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
         //Clamp Fall Speed
         VerticalVelocity = Mathf.Clamp(VerticalVelocity, -MoveStats.MaxFallSpeed, 50f);
 
-        rb.velocity = new Vector2(rb.velocity.x, VerticalVelocity);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, VerticalVelocity);
     }
 
     private void InitiateJump(int numJumpsUsed)
@@ -303,12 +303,12 @@ public class PlayerController : MonoBehaviour
             }
 
             moveVelocity = Vector2.Lerp(moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-            rb.velocity = new Vector2(moveVelocity.x, rb.velocity.y);
+            rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
         }
         else if (moveInput == Vector2.zero)
         {
             moveVelocity = Vector2.Lerp(moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
-            rb.velocity = new Vector2(moveVelocity.x, rb.velocity.y);
+            rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
         }
 
     }
