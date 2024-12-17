@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
+using Unity.VisualScripting;
 
-public class InputManager : MonoBehaviour
+public class InputManager : NetworkBehaviour
 {
     public static PlayerInput PlayerInput;
 
@@ -31,13 +33,16 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        Movement = _moveAction.ReadValue<Vector2>();
+        if (IsOwner)
+        {
+            Movement = _moveAction.ReadValue<Vector2>();
 
-        JumpWasPressed = _jumpAction.WasPerformedThisFrame();
-        JumpIsHeld = _jumpAction.IsPressed();
-        JumpWasReleased = _jumpAction.WasReleasedThisFrame();
+            JumpWasPressed = _jumpAction.WasPerformedThisFrame();
+            JumpIsHeld = _jumpAction.IsPressed();
+            JumpWasReleased = _jumpAction.WasReleasedThisFrame();
 
-        RunIsHeld = _runAction.IsPressed();
-        HitWasPressed = _hitAction.IsPressed();
+            RunIsHeld = _runAction.IsPressed();
+            HitWasPressed = _hitAction.IsPressed();
+        }
     }
 }
