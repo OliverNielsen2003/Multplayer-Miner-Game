@@ -2618,6 +2618,22 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 3641131966
       objectReference: {fileID: 0}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: stonePrefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: floorDecorPrefabs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: groundDecorPrefabs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'floorDecorPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: e6fa531913163e64eb137a2e79604150, type: 3}
     - target: {fileID: 8777039924791481200, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
