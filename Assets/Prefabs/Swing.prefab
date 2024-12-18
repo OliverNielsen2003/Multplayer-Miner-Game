@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8921552534374679825}
   - component: {fileID: 3060546858830468468}
   - component: {fileID: 2634152743398673088}
+  - component: {fileID: 8883309915992407883}
   m_Layer: 0
   m_Name: Swing
   m_TagString: Untagged
@@ -70,6 +71,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttack: 1
   isMoney: 1
+--- !u!114 &8883309915992407883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538007990774373606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2384318111
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &7480903058492971642
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf6feb248ac3bd47a03c6ed1dd2024d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!50 &2525766588987475853
 Rigidbody2D:
   serializedVersion: 5

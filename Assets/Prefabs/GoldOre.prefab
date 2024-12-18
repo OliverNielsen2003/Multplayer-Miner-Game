@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5731120429891113430}
   - component: {fileID: 7996990441868426714}
+  - component: {fileID: -8051826289417410247}
   - component: {fileID: 8156449459517569490}
   - component: {fileID: -4012150578728758134}
   m_Layer: 6
@@ -90,6 +91,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8051826289417410247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3677954064157663262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1666189373
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &8156449459517569490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,14 +128,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d69733394371c4e9be0f015bb42af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   MaxHealth: 4
-  health: 4
   spriteRenderer: {fileID: 7996990441868426714}
   ReplacementTile: {fileID: 8514965493473313411, guid: d16aac30e49a3cf4c8c861fed55a058e, type: 3}
   destructionResidue: {fileID: 5685102215054434671, guid: 4e528cffca0239648a1c067cf47f1c7a, type: 3}
   normal: {fileID: 21300000, guid: 5fd8ea1683674ed4e82c18d5ae83aeab, type: 3}
   hurt: {fileID: 21300000, guid: 10d96f5d3da59bc44a2a64f9bc8a5a2d, type: 3}
-  Damaged: {fileID: 21300000, guid: 31e06b10beb892847a0fd70e9c91bbc1, type: 3}
+  damaged: {fileID: 21300000, guid: 31e06b10beb892847a0fd70e9c91bbc1, type: 3}
 --- !u!61 &-4012150578728758134
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,7 +198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3579025227029039923
 Transform:
   m_ObjectHideFlags: 0

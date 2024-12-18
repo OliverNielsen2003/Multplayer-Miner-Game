@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [Header("References")]
     public PlayerMovementStats MoveStats;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     //Hitting
     public bool isSwinging;
-    public GameObject swingObject;
+    public GameObject swingObjectPrefab;
     public Animator anim;
 
     //Jump Vars
@@ -388,15 +389,41 @@ public class PlayerController : MonoBehaviour
             {
                 swingRotation = Quaternion.Euler(0, 180, 0); // Swing left
             }
-            // Default (Vector2.right) rotation is already handled
 
-            // Instantiate the swing object with the determined rotation
-            GameObject swingeffect = Instantiate(swingObject, transform.position, swingRotation);
-            swingeffect.transform.parent = this.transform;
+            if (IsServer)
+            {
+                // Server-side instantiation
+                SpawnSwingObject(swingRotation);
+            }
+            else
+            {
+                // Request the server to spawn the swing object
+                SpawnSwingObjectServerRpc(swingRotation);
+            }
 
-            // Reset isSwinging after a delay (to be set in animation or coroutine)
+            // Reset the swing state after the animation
             StartCoroutine(ResetSwing());
         }
+    }
+
+    // This method is called by the server to spawn the swing object
+    private void SpawnSwingObject(Quaternion swingRotation)
+    {
+        // Instantiate the swing object on the server
+        GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
+
+        // Ensure the GameObject has a NetworkObject attached, then spawn it on the network
+        NetworkObject networkObject = swingEffect.GetComponent<NetworkObject>();
+        networkObject.Spawn(); // Spawn the networked object
+
+        swingEffect.transform.parent = this.transform; // Optional: Attach it to the player
+    }
+
+    [ServerRpc]
+    private void SpawnSwingObjectServerRpc(Quaternion swingRotation)
+    {
+        // Server-side spawn call
+        SpawnSwingObject(swingRotation);
     }
 
     private IEnumerator ResetSwing()
@@ -404,7 +431,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.2f); // Adjust this delay to match your swing animation
         isSwinging = false;
     }
-
 
     #endregion
 

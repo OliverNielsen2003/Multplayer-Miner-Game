@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1652931363369043118
 Transform:
   m_ObjectHideFlags: 0
@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4362542871098666213}
   - component: {fileID: 2995518548734117443}
+  - component: {fileID: 8982351948632266589}
   - component: {fileID: 8002336966974306611}
   - component: {fileID: 2706033539592377192}
   m_Layer: 6
@@ -177,6 +178,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8982351948632266589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514965493473313411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3844944275
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &8002336966974306611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,14 +215,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d69733394371c4e9be0f015bb42af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   MaxHealth: 3
-  health: 3
   spriteRenderer: {fileID: 2995518548734117443}
   ReplacementTile: {fileID: 8514965493473313411, guid: d16aac30e49a3cf4c8c861fed55a058e, type: 3}
   destructionResidue: {fileID: 8506997422503877751, guid: f14e2e3875cfc544e8c475fbbc52049f, type: 3}
   normal: {fileID: 21300000, guid: 0098ddaccea16c04cbac4b8bfc567d33, type: 3}
   hurt: {fileID: 21300000, guid: 23880fbd0b301d24f8a3a49293b0ea0f, type: 3}
-  Damaged: {fileID: 21300000, guid: 44dd3e43e78fdec46bdadc84e2aaa0bc, type: 3}
+  damaged: {fileID: 21300000, guid: 44dd3e43e78fdec46bdadc84e2aaa0bc, type: 3}
 --- !u!61 &2706033539592377192
 BoxCollider2D:
   m_ObjectHideFlags: 0

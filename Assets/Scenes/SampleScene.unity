@@ -2612,26 +2612,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5611799681725323252, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: AlwaysReplicateAsRoot
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5611799681725323252, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 3641131966
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: floorDecorChance
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: stonePrefabs.Array.size
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'stonePrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: a24a89211b1abfc42b9759e91a593e43, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'stonePrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: a24a89211b1abfc42b9759e91a593e43, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'stonePrefabs.Array.data[8]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: 911de42a772b2f4499863afde485a838, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'stonePrefabs.Array.data[9]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: 911de42a772b2f4499863afde485a838, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: floorDecorPrefabs.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: groundDecorPrefabs.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: 'floorDecorPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: 5f9f6cbab91c7c748be1f4e727478cb8, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'groundDecorPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: de886c3264b20d44dbe86f9c3e1aa623, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'groundDecorPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 8514965493473313411, guid: e6fa531913163e64eb137a2e79604150, type: 3}
     - target: {fileID: 8777039924791481200, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}

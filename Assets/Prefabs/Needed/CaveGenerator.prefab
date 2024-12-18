@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 8514965493473313411, guid: a24a89211b1abfc42b9759e91a593e43, type: 3}
   - {fileID: 8514965493473313411, guid: a24a89211b1abfc42b9759e91a593e43, type: 3}
   - {fileID: 8514965493473313411, guid: a24a89211b1abfc42b9759e91a593e43, type: 3}
+  - {fileID: 8514965493473313411, guid: 32f493e7aa366164c84fa2d406040984, type: 3}
   - {fileID: 8514965493473313411, guid: 911de42a772b2f4499863afde485a838, type: 3}
   - {fileID: 8514965493473313411, guid: 911de42a772b2f4499863afde485a838, type: 3}
   - {fileID: 8514965493473313411, guid: 911de42a772b2f4499863afde485a838, type: 3}
@@ -98,11 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 1396573783
+  InScenePlacedSourceGlobalObjectIdHash: 3641131966
   DeferredDespawnTick: 0
   Ownership: 1
-  AlwaysReplicateAsRoot: 0
+  AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1

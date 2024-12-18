@@ -1,154 +1,96 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Netcode;
 
-public class TerrainGeneration : MonoBehaviour
+public class TerrainGeneration : NetworkBehaviour
 {
-    public GameObject[] stonePrefabs; // Prefab for stone
+    public GameObject[] stonePrefabs; // Prefabs for stone
     public GameObject orePrefab; // Prefab for ores
     public GameObject backgroundPrefab; // Prefab for the background
     public GameObject shrinePrefab; // Prefab for the shrine
-    public GameObject[] floorDecorPrefabs;
-    public GameObject[] groundDecorPrefabs;// Prefabs for floor spikes or other decor
+    public GameObject[] floorDecorPrefabs; // Floor decor prefabs
+    public GameObject[] groundDecorPrefabs; // Ground decor prefabs
 
     public int worldSize = 100;
     public float noiseFreq = 0.05f;
-    public float seed;
-    public Texture2D noiseTexture;
+    private Texture2D noiseTexture;
 
-    [Range(0f, 1f)] public float oreSpawnChance = 0.1f; // Chance of spawning ores in the foreground
-    [Range(0f, 1f)] public float floorDecorChance = 0.1f; // Chance of placing floor decor
-    public int oreClusterSize = 5; // Maximum size of ore clusters
+    [Range(0f, 1f)] public float oreSpawnChance = 0.1f;
+    [Range(0f, 1f)] public float floorDecorChance = 0.1f;
+    public int oreClusterSize = 5;
 
-    public Vector2Int shrinePosition; // Position for the shrine (set in inspector or via code)
-    public Vector2Int shrineSize = new Vector2Int(5, 5); // Size of the shrine
+    public Vector2Int shrinePosition;
+    public Vector2Int shrineSize = new Vector2Int(5, 5);
+    public float tileSize = 0.5f;
 
-    public float tileSize = 0.5f; // Size of each tile (adjust to match your new tile art size)
+    private NetworkVariable<int> networkSeed = new NetworkVariable<int>();
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
-        seed = Random.Range(-10000, 10000);
+        base.OnNetworkSpawn();
+
+        if (IsServer)
+        {
+            // Generate and sync seed
+            int generatedSeed = Random.Range(-10000, 10000);
+            networkSeed.Value = generatedSeed;
+            InitializeWorld(generatedSeed);
+        }
+        else
+        {
+            // Use seed from server
+            networkSeed.OnValueChanged += (oldSeed, newSeed) =>
+            {
+                InitializeWorld(newSeed);
+            };
+        }
+    }
+
+    private void InitializeWorld(int seed)
+    {
+        Random.InitState(seed);
         GenerateNoiseTexture();
         GenerateTerrain();
     }
 
-    public void GenerateTerrain()
+    private void GenerateTerrain()
     {
         for (int x = 0; x < worldSize; x++)
         {
             for (int y = 0; y < worldSize; y++)
             {
-                bool isTerrainPlaced = false; // Flag to track if terrain has been placed at this position
+                bool isTerrainPlaced = false;
 
-                if (noiseTexture.GetPixel(x, y).r < 0.5f) // Low-value areas, likely where stone should be
+                if (noiseTexture.GetPixel(x, y).r < 0.5f)
                 {
-                    if (Random.value < oreSpawnChance) // Chance for an ore deposit
+                    if (Random.value < oreSpawnChance)
                     {
-                        GenerateOreCluster(orePrefab, x, y); // Generate ore deposit at this position
+                        GenerateOreCluster(orePrefab, x, y);
                         isTerrainPlaced = true;
                     }
                     else
                     {
-                        PlaceTile(stonePrefabs[Random.Range(0, stonePrefabs.Length)], x, y); // Place stone if no ore is generated
+                        SpawnTile(stonePrefabs[Random.Range(0, stonePrefabs.Length)], x, y);
                         isTerrainPlaced = true;
                     }
                 }
 
                 if (!isTerrainPlaced)
                 {
-                    PlaceTile(backgroundPrefab, x, y); // Place background where no terrain is generated
+                    SpawnTile(backgroundPrefab, x, y);
                 }
             }
         }
 
-        // After placing terrain, add floor decor
+        // Add decor after terrain generation
         AddFloorDecor();
         AddGroundDecor();
-    }
-
-    private void AddFloorDecor()
-    {
-        for (int x = 0; x < worldSize; x++)
-        {
-            for (int y = 0; y < worldSize; y++)
-            {
-                // Check if there’s a terrain block at (x, y)
-                GameObject floorBlock = GetTileAtPosition(x, y);
-                if (floorBlock != null)
-                {
-                    // Check if there’s no block directly above this one (exposed top surface)
-                    if (GetTileAtPosition(x, y + 1) == null)
-                    {
-                        // Randomly decide whether to place decor based on chance
-                        if (Random.value < floorDecorChance)
-                        {
-                            PlaceFloorDecor(floorBlock, x, y+1);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private void AddGroundDecor()
-    {
-        for (int x = 0; x < worldSize; x++)
-        {
-            for (int y = 0; y < worldSize; y++)
-            {
-                // Check if there’s a terrain block at (x, y)
-                GameObject floorBlock = GetTileAtPosition(x, y);
-                if (floorBlock != null)
-                {
-                    // Check if there’s no block directly above this one (exposed top surface)
-                    if (GetTileAtPosition(x, y + 1) == null)
-                    {
-                        // Randomly decide whether to place decor based on chance
-                        if (Random.value < floorDecorChance)
-                        {
-                            // Position the decor on top of the block
-                            Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
-
-                            // Instantiate decor and make it a child of the floor block
-                            GameObject decor = Instantiate(groundDecorPrefabs[Random.Range(0, groundDecorPrefabs.Length)], position, Quaternion.identity);
-                            decor.transform.SetParent(floorBlock.transform);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void PlaceFloorDecor(GameObject floorBlock, int x, int y)
-    {
-        // Position the decor on top of the block
-        Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
-
-        // Instantiate decor and make it a child of the floor block
-        GameObject decor = Instantiate(floorDecorPrefabs[Random.Range(0, floorDecorPrefabs.Length)], position, Quaternion.identity);
-        decor.transform.SetParent(floorBlock.transform);
-    }
-
-
-    private void GenerateNoiseTexture()
-    {
-        noiseTexture = new Texture2D(worldSize, worldSize);
-
-        for (int x = 0; x < noiseTexture.width; x++)
-        {
-            for (int y = 0; y < noiseTexture.height; y++)
-            {
-                float v = Mathf.PerlinNoise((x + seed) * noiseFreq, (y + seed) * noiseFreq);
-                noiseTexture.SetPixel(x, y, new Color(v, v, v));
-            }
-        }
-
-        noiseTexture.Apply();
     }
 
     private void GenerateOreCluster(GameObject orePrefab, int startX, int startY)
     {
         int clusterSize = Random.Range(1, oreClusterSize + 1);
-
-        PlaceTile(orePrefab, startX, startY); // Place the first ore tile
+        SpawnTile(orePrefab, startX, startY);
 
         for (int i = 0; i < clusterSize - 1; i++)
         {
@@ -160,31 +102,68 @@ public class TerrainGeneration : MonoBehaviour
 
             if (x >= 0 && x < worldSize && y >= 0 && y < worldSize)
             {
-                PlaceTile(orePrefab, x, y); // Place more ore tiles for the cluster
+                SpawnTile(orePrefab, x, y);
             }
         }
     }
 
-
-    public void PlaceTile(GameObject prefab, int x, int y)
+    private void AddFloorDecor()
     {
-        // Scale the position by the tile size to account for the smaller tiles
-        Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
-
-        // Destroy any existing tile at this position
-        GameObject existingTile = GetTileAtPosition(x, y);
-        if (existingTile != null)
+        for (int x = 0; x < worldSize; x++)
         {
-            Destroy(existingTile);
+            for (int y = 0; y < worldSize; y++)
+            {
+                GameObject floorBlock = GetTileAtPosition(x, y);
+                if (floorBlock != null && GetTileAtPosition(x, y + 1) == null)
+                {
+                    if (Random.value < floorDecorChance)
+                    {
+                        SpawnDecor(floorDecorPrefabs, floorBlock, x, y);
+                    }
+                }
+            }
         }
-
-        // Instantiate the new tile
-        GameObject tile = Instantiate(prefab, position, Quaternion.identity);
-        DestructibleTile destructibleTile = tile.GetComponent<DestructibleTile>();
     }
 
+    private void AddGroundDecor()
+    {
+        for (int x = 0; x < worldSize; x++)
+        {
+            for (int y = 0; y < worldSize; y++)
+            {
+                GameObject groundBlock = GetTileAtPosition(x, y);
+                if (groundBlock != null && GetTileAtPosition(x, y + 1) == null)
+                {
+                    if (Random.value < floorDecorChance)
+                    {
+                        SpawnDecor(groundDecorPrefabs, groundBlock, x, y + 1);
+                    }
+                }
+            }
+        }
+    }
 
-    public GameObject GetTileAtPosition(int x, int y)
+    private void SpawnTile(GameObject prefab, int x, int y)
+    {
+        if (!IsServer) return; // Only the server spawns tiles
+
+        Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
+        GameObject tile = Instantiate(prefab, position, Quaternion.identity);
+        tile.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
+        tile.transform.SetParent(this.transform);
+    }
+
+    private void SpawnDecor(GameObject[] decorPrefabs, GameObject parentBlock, int x, int y)
+    {
+        if (!IsServer) return;
+
+        Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
+        GameObject decor = Instantiate(decorPrefabs[Random.Range(0, decorPrefabs.Length)], position, Quaternion.identity);
+        decor.GetComponent<NetworkObject>().Spawn(); // Spawn decor on the network
+        decor.transform.SetParent(parentBlock.transform);
+    }
+
+    private GameObject GetTileAtPosition(int x, int y)
     {
         Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
         Collider2D[] colliders = Physics2D.OverlapPointAll(position);
@@ -200,12 +179,19 @@ public class TerrainGeneration : MonoBehaviour
         return null;
     }
 
-    public void DestroyTile(int x, int y)
+    private void GenerateNoiseTexture()
     {
-        GameObject tile = GetTileAtPosition(x, y);
-        if (tile != null)
+        noiseTexture = new Texture2D(worldSize, worldSize);
+
+        for (int x = 0; x < noiseTexture.width; x++)
         {
-            Destroy(tile); // Destroy the GameObject at the given position
+            for (int y = 0; y < noiseTexture.height; y++)
+            {
+                float v = Mathf.PerlinNoise((x + networkSeed.Value) * noiseFreq, (y + networkSeed.Value) * noiseFreq);
+                noiseTexture.SetPixel(x, y, new Color(v, v, v));
+            }
         }
+
+        noiseTexture.Apply();
     }
 }

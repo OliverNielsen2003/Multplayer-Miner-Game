@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7677128703023578449}
   - component: {fileID: 3333837182391308745}
   - component: {fileID: 1784504094840651359}
+  - component: {fileID: 2496564074275823522}
   m_Layer: 0
   m_Name: Gold
   m_TagString: Untagged
@@ -167,3 +168,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttack: 0
   isMoney: 1
+--- !u!114 &2496564074275823522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5685102215054434671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3392589517
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
