@@ -49,21 +49,22 @@ public class DestructibleTile : NetworkBehaviour
     {
         if (ReplacementTile != null)
         {
-            Instantiate(ReplacementTile, transform.position, Quaternion.identity);  // Instantiate a destruction effect
+            GameObject replaceTile = Instantiate(ReplacementTile, transform.position, Quaternion.identity);  // Instantiate a destruction effect
+            replaceTile.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
         }
         if (destructionResidue != null)
         {
             int rand = Random.Range(2, 4);
             for (int i = 0; i < rand; i++)
             {
-                Instantiate(destructionResidue, transform.position, Quaternion.identity);
+                GameObject residue = Instantiate(destructionResidue, transform.position, Quaternion.identity);
+                residue.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
             }
         }
 
         // Notify all clients to destroy the tile
+        DestroyChildrenClientRpc();
         DestroyTileClientRpc();
-
-        Destroy(gameObject);  // Destroy the destructible object on the server
     }
 
     private void Update()
@@ -118,5 +119,14 @@ public class DestructibleTile : NetworkBehaviour
     private void DestroyTileClientRpc()
     {
         Destroy(gameObject);  // Destroy the tile on clients
+    }
+
+    [ClientRpc]
+    private void DestroyChildrenClientRpc()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
     }
 }

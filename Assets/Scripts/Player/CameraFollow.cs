@@ -33,6 +33,12 @@ public class CameraFollow : NetworkBehaviour
     // Update is called every frame to update camera position
     void Update()
     {
+        ChangeCameraClientRpc();
+    }
+
+    [ClientRpc]
+    public void ChangeCameraClientRpc()
+    {
         if (playerCamera != null)
         {
             playerCamera = GetComponentInChildren<Camera>();

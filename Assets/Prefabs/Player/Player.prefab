@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 681716664
+  GlobalObjectIdHash: 548599247
   InScenePlacedSourceGlobalObjectIdHash: 548599247
   DeferredDespawnTick: 0
   Ownership: 1
@@ -667,19 +667,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0.0009718173
+      value: 0.00090826524
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.037996545
+      value: 0.019801982
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 1.3586006
+      value: 1.3297004
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.46632123
+      value: 0.7128713
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
