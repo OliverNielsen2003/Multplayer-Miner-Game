@@ -2651,6 +2651,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8514965493473313411, guid: 5f9f6cbab91c7c748be1f4e727478cb8, type: 3}
     - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'floorDecorPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: e6fa531913163e64eb137a2e79604150, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
+      propertyPath: 'floorDecorPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8514965493473313411, guid: e6fa531913163e64eb137a2e79604150, type: 3}
+    - target: {fileID: 6163697916491671631, guid: e066ea747f9c6f84b9bf29efc0c1398b, type: 3}
       propertyPath: 'groundDecorPrefabs.Array.data[0]'
       value: 
       objectReference: {fileID: 8514965493473313411, guid: de886c3264b20d44dbe86f9c3e1aa623, type: 3}

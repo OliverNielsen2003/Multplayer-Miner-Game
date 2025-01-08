@@ -10,6 +10,7 @@ public class DestructibleTile : NetworkBehaviour
     public SpriteRenderer spriteRenderer;  // SpriteRenderer to handle visual feedback
     public GameObject ReplacementTile;  // Prefab for destruction effects (optional)
     public GameObject destructionResidue;
+    public GameObject destructionEffect;
 
     // Sprites
     public Sprite normal;
@@ -50,7 +51,9 @@ public class DestructibleTile : NetworkBehaviour
         if (ReplacementTile != null)
         {
             GameObject replaceTile = Instantiate(ReplacementTile, transform.position, Quaternion.identity);  // Instantiate a destruction effect
+            GameObject effect = Instantiate(destructionEffect, transform.position, Quaternion.identity);  // Instantiate a destruction effect
             replaceTile.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
+            effect.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
         }
         if (destructionResidue != null)
         {

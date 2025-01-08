@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1652931363369043118
 Transform:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2237304816
+  GlobalObjectIdHash: 3844944275
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -220,6 +220,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2995518548734117443}
   ReplacementTile: {fileID: 8514965493473313411, guid: d16aac30e49a3cf4c8c861fed55a058e, type: 3}
   destructionResidue: {fileID: 8506997422503877751, guid: f14e2e3875cfc544e8c475fbbc52049f, type: 3}
+  destructionEffect: {fileID: 9052404003115342765, guid: 9a61f78d1e02ae945a41ad0153a630b8, type: 3}
   normal: {fileID: 21300000, guid: 0098ddaccea16c04cbac4b8bfc567d33, type: 3}
   hurt: {fileID: 21300000, guid: 23880fbd0b301d24f8a3a49293b0ea0f, type: 3}
   damaged: {fileID: 21300000, guid: 44dd3e43e78fdec46bdadc84e2aaa0bc, type: 3}

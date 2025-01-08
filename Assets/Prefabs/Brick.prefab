@@ -220,6 +220,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2995518548734117443}
   ReplacementTile: {fileID: 8514965493473313411, guid: d16aac30e49a3cf4c8c861fed55a058e, type: 3}
   destructionResidue: {fileID: 8506997422503877751, guid: f14e2e3875cfc544e8c475fbbc52049f, type: 3}
+  destructionEffect: {fileID: 9052404003115342765, guid: 9a61f78d1e02ae945a41ad0153a630b8, type: 3}
   normal: {fileID: 21300000, guid: 3b15c839e821fad4189668546acd758d, type: 3}
   hurt: {fileID: 21300000, guid: 590c5127fe316614ea1210854c560b76, type: 3}
   damaged: {fileID: 21300000, guid: e14957cfd66b3d746aa77590d0b2ca56, type: 3}

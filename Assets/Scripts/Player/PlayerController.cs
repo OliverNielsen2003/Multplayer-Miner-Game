@@ -372,6 +372,8 @@ public class PlayerController : NetworkBehaviour
             Vector2 inputDirection = InputManager.Movement.normalized;
             Quaternion swingRotation = Quaternion.identity; // Default rotation (facing right)
 
+            Debug.Log(inputDirection);
+
             if (inputDirection == Vector2.zero) // Neutral attack
             {
                 inputDirection = isFacingRight ? Vector2.right : Vector2.left;
