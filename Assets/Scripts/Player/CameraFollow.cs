@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem;
 
 public class CameraFollow : NetworkBehaviour
 {
@@ -12,7 +13,8 @@ public class CameraFollow : NetworkBehaviour
 
         Camera.GetComponent<Camera>().enabled = false;
         GetComponent<PlayerController>().enabled = false;
-        GetComponent<Animator>().enabled = false;
+        //transform.GetChild(4).gameObject.GetComponent<Animator>().enabled = false;
+        GetComponent<PlayerInput>().enabled = false;
     }
     void Update()
     {

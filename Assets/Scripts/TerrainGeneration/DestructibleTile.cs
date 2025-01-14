@@ -7,8 +7,8 @@ public class DestructibleTile : NetworkBehaviour
     private NetworkVariable<int> health = new NetworkVariable<int>();
     private float RegenTime = 3f;
 
-    public SpriteRenderer spriteRenderer;  // SpriteRenderer to handle visual feedback
-    public GameObject ReplacementTile;  // Prefab for destruction effects (optional)
+    public SpriteRenderer spriteRenderer;
+    public GameObject ReplacementTile;
     public GameObject destructionResidue;
     public GameObject destructionEffect;
 
@@ -21,7 +21,7 @@ public class DestructibleTile : NetworkBehaviour
     {
         if (IsServer)
         {
-            health.Value = MaxHealth;  // Initialize health on the server
+            health.Value = MaxHealth;
         }
 
         health.OnValueChanged += (oldHealth, newHealth) =>
@@ -32,28 +32,28 @@ public class DestructibleTile : NetworkBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (!IsServer) return;  // Ensure only the server processes damage
+        if (!IsServer) return;
 
         RegenTime = 5f;
         health.Value -= damage;
 
-        // Update clients with new sprite and play SFX
         UpdateSpriteClientRpc();
 
         if (health.Value <= 0)
         {
-            DestroyTile();
+            ReplaceTileClientRpc();
         }
     }
 
-    private void DestroyTile()
+    [ClientRpc]
+    private void ReplaceTileClientRpc()
     {
         if (ReplacementTile != null)
         {
-            GameObject replaceTile = Instantiate(ReplacementTile, transform.position, Quaternion.identity);  // Instantiate a destruction effect
-            GameObject effect = Instantiate(destructionEffect, transform.position, Quaternion.identity);  // Instantiate a destruction effect
-            replaceTile.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
-            effect.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
+            GameObject replaceTile = Instantiate(ReplacementTile, transform.position, Quaternion.identity);
+            GameObject effect = Instantiate(destructionEffect, transform.position, Quaternion.identity);
+            replaceTile.GetComponent<NetworkObject>().Spawn();
+            effect.GetComponent<NetworkObject>().Spawn();
         }
         if (destructionResidue != null)
         {
@@ -61,11 +61,10 @@ public class DestructibleTile : NetworkBehaviour
             for (int i = 0; i < rand; i++)
             {
                 GameObject residue = Instantiate(destructionResidue, transform.position, Quaternion.identity);
-                residue.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
+                residue.GetComponent<NetworkObject>().Spawn();
             }
         }
 
-        // Notify all clients to destroy the tile
         DestroyChildrenClientRpc();
         DestroyTileClientRpc();
     }
@@ -77,7 +76,7 @@ public class DestructibleTile : NetworkBehaviour
 
     private void CountTimers()
     {
-        if (!IsServer) return;  // Ensure regeneration only happens on the server
+        if (!IsServer) return;
 
         if (health.Value < MaxHealth)
         {
@@ -110,7 +109,6 @@ public class DestructibleTile : NetworkBehaviour
     private void UpdateSpriteClientRpc()
     {
         UpdateSprite();
-        // Play sound effect on all clients
         var audioManager = FindObjectOfType<AudioManager>();
         if (audioManager != null)
         {
@@ -121,7 +119,7 @@ public class DestructibleTile : NetworkBehaviour
     [ClientRpc]
     private void DestroyTileClientRpc()
     {
-        Destroy(gameObject);  // Destroy the tile on clients
+        Destroy(gameObject);
     }
 
     [ClientRpc]

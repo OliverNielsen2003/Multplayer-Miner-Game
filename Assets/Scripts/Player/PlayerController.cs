@@ -86,14 +86,12 @@ public class PlayerController : NetworkBehaviour
 
     private void Jump()
     {
-        //Apply Gravity While Falling
         if (isJumping)
         {
             if (bumpedHead)
             {
                 isFastFalling = true;
             }
-            //Gravity on Ascending
             if (VerticalVelocity >= 0f)
             {
                 apexPoint = Mathf.InverseLerp(MoveStats.InitialJumpVelocity, 0f, VerticalVelocity);
@@ -120,7 +118,6 @@ public class PlayerController : NetworkBehaviour
                     }
                 }
 
-                //Gravity on Ascending but not past apex Threshold
                 else
                 {
                     VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
@@ -132,7 +129,6 @@ public class PlayerController : NetworkBehaviour
             }
 
 
-            //Gravity on Descending
             else if (!isFastFalling)
             {
                 VerticalVelocity += MoveStats.Gravity * MoveStats.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
@@ -148,7 +144,6 @@ public class PlayerController : NetworkBehaviour
 
 
         }
-        //Jump Cut
         if (isFastFalling)
         {
             if (fastFallTime >= MoveStats.TimeForUpwardsCancel)
@@ -162,7 +157,7 @@ public class PlayerController : NetworkBehaviour
 
             fastFallTime += Time.fixedDeltaTime;
         }
-        //Normal Gravity While Falling
+
         if (!isGrounded && !isJumping)
         {
             if (isFalling)
@@ -173,7 +168,6 @@ public class PlayerController : NetworkBehaviour
             VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
         }
 
-        //Clamp Fall Speed
         VerticalVelocity = Mathf.Clamp(VerticalVelocity, -MoveStats.MaxFallSpeed, 50f);
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, VerticalVelocity);
@@ -368,69 +362,66 @@ public class PlayerController : NetworkBehaviour
             isSwinging = true;
             anim.SetTrigger("Hit");
 
-            // Determine swing direction based on input
             Vector2 inputDirection = InputManager.Movement.normalized;
-            Quaternion swingRotation = Quaternion.identity; // Default rotation (facing right)
+            Quaternion swingRotation = Quaternion.identity;
 
             Debug.Log(inputDirection);
 
-            if (inputDirection == Vector2.zero) // Neutral attack
+            if (inputDirection == Vector2.zero)
             {
                 inputDirection = isFacingRight ? Vector2.right : Vector2.left;
             }
 
             if (inputDirection == Vector2.down)
             {
-                swingRotation = Quaternion.Euler(0, 0, -90); // Swing down
+                swingRotation = Quaternion.Euler(0, 0, -90);
             }
             else if (inputDirection == Vector2.up)
             {
-                swingRotation = Quaternion.Euler(0, 0, 90); // Swing up
+                swingRotation = Quaternion.Euler(0, 0, 90);
             }
             else if (inputDirection == Vector2.left)
             {
-                swingRotation = Quaternion.Euler(0, 180, 0); // Swing left
+                swingRotation = Quaternion.Euler(0, 180, 0);
             }
 
             if (IsServer)
             {
-                // Server-side instantiation
-                SpawnSwingObject(swingRotation);
+                SpawnSwingObjectServerRpc(swingRotation);
             }
             else
             {
-                // Request the server to spawn the swing object
                 SpawnSwingObjectServerRpc(swingRotation);
             }
 
-            // Reset the swing state after the animation
             StartCoroutine(ResetSwing());
         }
     }
 
-    // This method is called by the server to spawn the swing object
     private void SpawnSwingObject(Quaternion swingRotation)
     {
-        // Instantiate the swing object on the server
         GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
 
-        // Ensure the GameObject has a NetworkObject attached, then spawn it on the network
         NetworkObject networkObject = swingEffect.GetComponent<NetworkObject>();
-        networkObject.Spawn(); // Spawn the networked object
+        networkObject.Spawn();
 
-        swingEffect.transform.parent = this.transform; // Optional: Attach it to the player
+        swingEffect.transform.parent = this.transform;
     }
 
     [ServerRpc]
     private void SpawnSwingObjectServerRpc(Quaternion swingRotation)
     {
-        // Server-side spawn call
-        SpawnSwingObject(swingRotation);
+        GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
+
+        NetworkObject networkObject = swingEffect.GetComponent<NetworkObject>();
+        networkObject.Spawn();
+
+        swingEffect.transform.parent = this.transform;
     }
 
     private IEnumerator ResetSwing()
     {
-        yield return new WaitForSeconds(0.2f); // Adjust this delay to match your swing animation
+        yield return new WaitForSeconds(0.2f);
         isSwinging = false;
     }
 
