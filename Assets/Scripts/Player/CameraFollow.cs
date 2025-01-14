@@ -3,19 +3,20 @@ using Unity.Netcode;
 
 public class CameraFollow : NetworkBehaviour
 {
-    public GameObject playerCamera;
     public Vector3 offset;
-    public GameObject Prefab;
+    public GameObject Camera;
 
     private void Start()
     {
-        playerCamera = Instantiate(Prefab, new Vector3(transform.position.x, transform.position.y, Prefab.transform.position.z), transform.rotation);
-    }
+        if (IsLocalPlayer) return;
 
-    // Update is called every frame to update camera position
+        Camera.GetComponent<Camera>().enabled = false;
+        GetComponent<PlayerController>().enabled = false;
+        GetComponent<Animator>().enabled = false;
+    }
     void Update()
     {
-        playerCamera.transform.position = transform.position + offset;
-        playerCamera.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        Camera.transform.position = transform.position + offset;
+        Camera.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 }

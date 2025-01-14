@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5995633784062408951}
   m_Layer: 8
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,10 +62,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0009718173
-    y: 0.037996545
-    width: 1.3586006
-    height: 0.46632123
+    x: 0.00090826524
+    y: 0.019801982
+    width: 1.3297004
+    height: 0.7128713
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
