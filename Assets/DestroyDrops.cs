@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class DestroyDrops : MonoBehaviour
+public class DestroyDrops : NetworkBehaviour
 {
     public bool isAttack = false;
     public bool isMoney = true;
     private Rigidbody2D rb;
     private CircleCollider2D col;
 
-    [ClientRpc]
+    [Rpc(SendTo.Server)]
     public void DeathClientRpc()
     {
         Destroy(gameObject);

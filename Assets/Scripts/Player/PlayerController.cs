@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Collider2D bodyCol;
 
     private Rigidbody2D rb;
+    private NetworkRigidbody2D rb2;
 
     //movement vars;
     private Vector2 moveVelocity;
@@ -56,6 +58,7 @@ public class PlayerController : NetworkBehaviour
     {
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
+        rb2 = GetComponent<NetworkRigidbody2D>();
     }
 
     private void Update()
@@ -267,7 +270,7 @@ public class PlayerController : NetworkBehaviour
     {
         jumpBufferTime -= Time.deltaTime;
 
-        if(!isGrounded)
+        if (!isGrounded)
         {
             coyoteTimer -= Time.deltaTime;
         }
@@ -299,6 +302,7 @@ public class PlayerController : NetworkBehaviour
 
             moveVelocity = Vector2.Lerp(moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
             rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
+            //rb2.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
         }
         else if (moveInput == Vector2.zero)
         {
@@ -310,7 +314,7 @@ public class PlayerController : NetworkBehaviour
 
     private void TurnCheck(Vector2 moveInput)
     {
-        if(isFacingRight && moveInput.x < 0)
+        if (isFacingRight && moveInput.x < 0)
         {
             Turn(false);
         }
@@ -385,30 +389,12 @@ public class PlayerController : NetworkBehaviour
                 swingRotation = Quaternion.Euler(0, 180, 0);
             }
 
-            if (IsServer)
-            {
-                SpawnSwingObjectServerRpc(swingRotation);
-            }
-            else
-            {
-                SpawnSwingObjectServerRpc(swingRotation);
-            }
-
+            SpawnSwingObjectServerRpc(swingRotation);
             StartCoroutine(ResetSwing());
         }
     }
 
-    private void SpawnSwingObject(Quaternion swingRotation)
-    {
-        GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
-
-        NetworkObject networkObject = swingEffect.GetComponent<NetworkObject>();
-        networkObject.Spawn();
-
-        swingEffect.transform.parent = this.transform;
-    }
-
-    [ServerRpc]
+    [Rpc(SendTo.Server)]
     private void SpawnSwingObjectServerRpc(Quaternion swingRotation)
     {
         GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
@@ -416,7 +402,7 @@ public class PlayerController : NetworkBehaviour
         NetworkObject networkObject = swingEffect.GetComponent<NetworkObject>();
         networkObject.Spawn();
 
-        swingEffect.transform.parent = this.transform;
+        //swingEffect.transform.parent = this.transform;
     }
 
     private IEnumerator ResetSwing()

@@ -45,7 +45,7 @@ public class DestructibleTile : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [Rpc(SendTo.Server)]
     private void ReplaceTileClientRpc()
     {
         if (ReplacementTile != null)
@@ -105,7 +105,7 @@ public class DestructibleTile : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [Rpc(SendTo.Server)]
     private void UpdateSpriteClientRpc()
     {
         UpdateSprite();
@@ -116,13 +116,13 @@ public class DestructibleTile : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [Rpc(SendTo.Server)]
     private void DestroyTileClientRpc()
     {
         Destroy(gameObject);
     }
 
-    [ClientRpc]
+    [Rpc(SendTo.Server)]
     private void DestroyChildrenClientRpc()
     {
         for (int i = 0; i < transform.childCount; i++)

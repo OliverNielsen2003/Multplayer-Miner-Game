@@ -10,6 +10,7 @@ public class TerrainGeneration : NetworkBehaviour
     public GameObject shrinePrefab; // Prefab for the shrine
     public GameObject[] floorDecorPrefabs; // Floor decor prefabs
     public GameObject[] groundDecorPrefabs; // Ground decor prefabs
+    public GameObject[] ceilingDecorPrefabs; // Ceiling decor prefabs
 
     public int worldSize = 100;
     public float noiseFreq = 0.05f;
@@ -85,6 +86,7 @@ public class TerrainGeneration : NetworkBehaviour
         // Add decor after terrain generation
         AddFloorDecor();
         AddGroundDecor();
+        AddCeilingDecor();
     }
 
     private void GenerateOreCluster(GameObject orePrefab, int startX, int startY)
@@ -119,6 +121,23 @@ public class TerrainGeneration : NetworkBehaviour
                     if (Random.value < floorDecorChance)
                     {
                         SpawnDecor(floorDecorPrefabs, floorBlock, x, y);
+                    }
+                }
+            }
+        }
+    }
+    private void AddCeilingDecor()
+    {
+        for (int x = 0; x < worldSize; x++)
+        {
+            for (int y = 0; y < worldSize; y++)
+            {
+                GameObject floorBlock = GetTileAtPosition(x, y);
+                if (floorBlock != null && GetTileAtPosition(x, y - 1) == null)
+                {
+                    if (Random.value < floorDecorChance)
+                    {
+                        SpawnDecor(ceilingDecorPrefabs, floorBlock, x, y - 1);
                     }
                 }
             }
