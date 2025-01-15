@@ -43,10 +43,10 @@ public class InputManager : NetworkBehaviour
             JumpWasPressed = _jumpAction.WasPerformedThisFrame();
             JumpIsHeld = _jumpAction.IsPressed();
             JumpWasReleased = _jumpAction.WasReleasedThisFrame();
+            AbilityWasPressed = _abilityAction.WasReleasedThisFrame();
 
             RunIsHeld = _runAction.IsPressed();
             HitWasPressed = _hitAction.IsPressed();
-            AbilityWasPressed = _abilityAction.IsPressed();
         }
     }
 }
