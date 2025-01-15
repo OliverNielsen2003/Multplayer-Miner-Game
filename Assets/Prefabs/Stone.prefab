@@ -224,6 +224,8 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 0098ddaccea16c04cbac4b8bfc567d33, type: 3}
   hurt: {fileID: 21300000, guid: 23880fbd0b301d24f8a3a49293b0ea0f, type: 3}
   damaged: {fileID: 21300000, guid: 44dd3e43e78fdec46bdadc84e2aaa0bc, type: 3}
+  hitSound: {fileID: 8300000, guid: 8c88e7a427c93d343a67199fd9d16a9d, type: 3}
+  breakSound: {fileID: 8300000, guid: b88b8168cbbe57445a17c774c29a3177, type: 3}
 --- !u!61 &2706033539592377192
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -53,6 +53,13 @@ public class PlayerController : NetworkBehaviour
     //Coyote Time Vars
     private float coyoteTimer;
 
+    //Character Selection
+    public bool isScout = false;
+    public bool isDigger = false;
+    public PlayerMovementStats DiggerMoveStats;
+    public PlayerMovementStats ScoutMoveStats;
+    public GameObject RopeAbility;
+    public GameObject LightAbility;
 
     private void Awake()
     {
@@ -63,8 +70,17 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
+        if (isScout)
+        {
+            MoveStats = ScoutMoveStats;
+        }
+        else if (isDigger)
+        {
+            MoveStats = DiggerMoveStats;
+        }
         CountTimers();
         JumpChecks();
+        AbilityCheck();
     }
 
     private void FixedUpdate()
@@ -369,8 +385,6 @@ public class PlayerController : NetworkBehaviour
             Vector2 inputDirection = InputManager.Movement.normalized;
             Quaternion swingRotation = Quaternion.identity;
 
-            Debug.Log(inputDirection);
-
             if (inputDirection == Vector2.zero)
             {
                 inputDirection = isFacingRight ? Vector2.right : Vector2.left;
@@ -451,6 +465,33 @@ public class PlayerController : NetworkBehaviour
     {
         IsGrounded();
         BumpedHead();
+    }
+
+    #endregion
+
+    #region Abilitys
+
+    public void AbilityCheck()
+    {
+        if (InputManager.AbilityWasPressed)
+        {
+            PerformAbilityClientRpc();
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    public void PerformAbilityClientRpc()
+    {
+        if (isDigger)
+        {
+            GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
+            effect.GetComponent<NetworkObject>().Spawn();
+        }
+        else if (isScout)
+        {
+            GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
+            effect.GetComponent<NetworkObject>().Spawn();
+        }
     }
 
     #endregion

@@ -2569,6 +2569,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4109dca9ba36a0245877371dced627b7, type: 3}
   - AudioName: Gold
     clip: {fileID: 8300000, guid: faa0cf8d451538c4c9d79d407eee5a6d, type: 3}
+  - AudioName: Rocks Breaking
+    clip: {fileID: 8300000, guid: b88b8168cbbe57445a17c774c29a3177, type: 3}
+  - AudioName: Gold Hit
+    clip: {fileID: 8300000, guid: 7ad7e5b81c24caf4d9048ae2dc01f33f, type: 3}
 --- !u!4 &1863412618
 Transform:
   m_ObjectHideFlags: 0

@@ -17,6 +17,10 @@ public class DestructibleTile : NetworkBehaviour
     public Sprite hurt;
     public Sprite damaged;
 
+    //Audio
+    public AudioClip hitSound;
+    public AudioClip breakSound;
+
     private void Start()
     {
         if (IsServer)
@@ -41,6 +45,17 @@ public class DestructibleTile : NetworkBehaviour
 
         if (health.Value <= 0)
         {
+            var audioManager = FindObjectOfType<AudioManager>();
+            if (audioManager != null)
+            {
+                for (int i = 0; i < audioManager.Clips.Length; i++)
+                {
+                    if (audioManager.Clips[i].clip == breakSound)
+                    {
+                        audioManager.PlaySFX(audioManager.Clips[i], true);
+                    }
+                }
+            }
             ReplaceTileClientRpc();
         }
     }
@@ -112,7 +127,13 @@ public class DestructibleTile : NetworkBehaviour
         var audioManager = FindObjectOfType<AudioManager>();
         if (audioManager != null)
         {
-            audioManager.PlaySFX(audioManager.Clips[0], true);
+            for (int i = 0; i < audioManager.Clips.Length; i++)
+            {
+                if (audioManager.Clips[i].clip == hitSound)
+                {
+                    audioManager.PlaySFX(audioManager.Clips[i], true);
+                }
+            }
         }
     }
 

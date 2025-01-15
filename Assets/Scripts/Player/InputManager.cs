@@ -15,11 +15,13 @@ public class InputManager : NetworkBehaviour
     public static bool JumpWasReleased;
     public static bool RunIsHeld;
     public static bool HitWasPressed;
+    public static bool AbilityWasPressed;
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _runAction;
     private InputAction _hitAction;
+    private InputAction _abilityAction;
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class InputManager : NetworkBehaviour
         _jumpAction = PlayerInput.actions["Jump"];
         _runAction = PlayerInput.actions["Run"];
         _hitAction = PlayerInput.actions["Hit"];
+        _abilityAction = PlayerInput.actions["Ability"];
     }
 
     private void Update()
@@ -43,6 +46,7 @@ public class InputManager : NetworkBehaviour
 
             RunIsHeld = _runAction.IsPressed();
             HitWasPressed = _hitAction.IsPressed();
+            AbilityWasPressed = _abilityAction.IsPressed();
         }
     }
 }
