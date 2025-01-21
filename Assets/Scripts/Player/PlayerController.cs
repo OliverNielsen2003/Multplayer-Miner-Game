@@ -17,7 +17,8 @@ public class PlayerController : NetworkBehaviour
 
     //movement vars;
     private Vector2 moveVelocity;
-    private bool isFacingRight;
+    [HideInInspector]
+    public bool isFacingRight;
     private bool isFacingUp;
     private bool isFacingDown;
 
@@ -60,12 +61,16 @@ public class PlayerController : NetworkBehaviour
     public PlayerMovementStats ScoutMoveStats;
     public GameObject RopeAbility;
     public GameObject LightAbility;
+    public int AbilityUses = 3;
+    private bool isCharging = false;
+    public GameObject CirlceAnim;
 
     private void Awake()
     {
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
         rb2 = GetComponent<NetworkRigidbody2D>();
+        CirlceAnim.SetActive(false);
     }
 
     private void Update()
@@ -473,15 +478,34 @@ public class PlayerController : NetworkBehaviour
 
     public void AbilityCheck()
     {
-        if (InputManager.AbilityWasPressed)
+        if (InputManager.AbilityWasPressed && AbilityUses > 0)
         {
             PerformAbilityClientRpc();
+        }
+    }
+
+    public IEnumerator RechargeAbility()
+    {
+        CirlceAnim.SetActive(true);
+        CirlceAnim.GetComponent<Animator>().SetTrigger("Ability");
+        isCharging = true;
+        yield return new WaitForSeconds(3f);
+        AbilityUses++;
+        CirlceAnim.SetActive(false);
+        isCharging = false;
+        if (AbilityUses < 3)
+        {
+            if (!isCharging)
+            {
+                StartCoroutine(RechargeAbility());
+            }
         }
     }
 
     [Rpc(SendTo.Server)]
     public void PerformAbilityClientRpc()
     {
+        AbilityUses--;
         if (isDigger)
         {
             GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
@@ -491,6 +515,10 @@ public class PlayerController : NetworkBehaviour
         {
             GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
             effect.GetComponent<NetworkObject>().Spawn();
+        }
+        if (!isCharging)
+        {
+            StartCoroutine(RechargeAbility());
         }
     }
 

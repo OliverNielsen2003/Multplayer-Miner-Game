@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FlareAbility : MonoBehaviour
@@ -11,12 +12,23 @@ public class FlareAbility : MonoBehaviour
         col = GetComponent<CapsuleCollider2D>();
 
         Vector3 direction = Random.insideUnitCircle.normalized;
-        rb.AddForce(-direction * 5f, ForceMode2D.Impulse);
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        if (Player.GetComponent<PlayerController>().isFacingRight)
+        {
+            rb.AddForce(new Vector2(0.65f, 0.65f) * 5f, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(new Vector2(-0.65f, 0.65f) * 5f, ForceMode2D.Impulse);
+        }
+        rb.AddTorque(Random.Range(-0.35f, 0.35f), ForceMode2D.Impulse);
+
+        StartCoroutine(Death());
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Death()
     {
-        
+        yield return new WaitForSeconds(10f);
+        Destroy(gameObject);
     }
 }
