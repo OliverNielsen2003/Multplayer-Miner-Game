@@ -115,8 +115,8 @@ public class TerrainGeneration : NetworkBehaviour
         {
             for (int y = 0; y < worldSize; y++)
             {
-                GameObject floorBlock = GetTileAtPosition(x, y);
-                if (floorBlock != null && GetTileAtPosition(x, y + 1) == null)
+                GameObject floorBlock = GetTileAtPosition(x, y, false);
+                if (floorBlock != null && GetTileAtPosition(x, y + 1, false) == null)
                 {
                     if (Random.value < floorDecorChance)
                     {
@@ -132,8 +132,8 @@ public class TerrainGeneration : NetworkBehaviour
         {
             for (int y = 0; y < worldSize; y++)
             {
-                GameObject floorBlock = GetTileAtPosition(x, y);
-                if (floorBlock != null && GetTileAtPosition(x, y - 1) == null)
+                GameObject floorBlock = GetTileAtPosition(x, y, false);
+                if (floorBlock != null && GetTileAtPosition(x, y - 1, false) == null)
                 {
                     if (Random.value < floorDecorChance)
                     {
@@ -150,8 +150,8 @@ public class TerrainGeneration : NetworkBehaviour
         {
             for (int y = 0; y < worldSize; y++)
             {
-                GameObject groundBlock = GetTileAtPosition(x, y);
-                if (groundBlock != null && GetTileAtPosition(x, y + 1) == null)
+                GameObject groundBlock = GetTileAtPosition(x, y, false);
+                if (groundBlock != null && GetTileAtPosition(x, y + 1, false) == null)
                 {
                     if (Random.value < floorDecorChance)
                     {
@@ -183,7 +183,7 @@ public class TerrainGeneration : NetworkBehaviour
         decor.transform.SetParent(parentBlock.transform);
     }
 
-    public GameObject GetTileAtPosition(int x, int y)
+    public GameObject GetTileAtPosition(int x, int y, bool bg)
     {
         Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
         Collider2D[] colliders = Physics2D.OverlapPointAll(position);
@@ -192,7 +192,28 @@ public class TerrainGeneration : NetworkBehaviour
         {
             if (collider.CompareTag("DestructibleTile"))
             {
-                return collider.gameObject;
+                if (!bg)
+                {
+                    if (collider.gameObject.GetComponent<DestructibleTile>() != null)
+                    {
+                        return collider.gameObject;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (collider.gameObject.GetComponent<TileNode>() != null)
+                    {
+                        return collider.gameObject;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
             }
         }
 

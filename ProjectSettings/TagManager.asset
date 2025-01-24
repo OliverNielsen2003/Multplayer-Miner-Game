@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DestructibleTile
   - Camera
+  - Rope
   layers:
   - Default
   - TransparentFX

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3458374338839000260}
   - component: {fileID: -3550210936357364176}
   - component: {fileID: 1532925443857788720}
-  m_Layer: 11
+  m_Layer: 6
   m_Name: BGStone
   m_TagString: DestructibleTile
   m_Icon: {fileID: 0}

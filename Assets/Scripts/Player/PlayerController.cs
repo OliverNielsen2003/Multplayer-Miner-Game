@@ -21,6 +21,7 @@ public class PlayerController : NetworkBehaviour
     public bool isFacingRight;
     private bool isFacingUp;
     private bool isFacingDown;
+    public bool isOnRope;
 
     //collision check vars
     private RaycastHit2D groundHit;
@@ -71,6 +72,15 @@ public class PlayerController : NetworkBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb2 = GetComponent<NetworkRigidbody2D>();
         CirlceAnim.SetActive(false);
+
+        if (IsServer)
+        {
+            isDigger = true;
+        }
+        else
+        {
+            isScout = true;
+        }
     }
 
     private void Update()
@@ -144,23 +154,26 @@ public class PlayerController : NetworkBehaviour
 
                 else
                 {
-                    VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
-                    if (isPastApexThreshold)
+                    if (!isOnRope)
                     {
-                        isPastApexThreshold = false;
+                        VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
+                        if (isPastApexThreshold)
+                        {
+                            isPastApexThreshold = false;
+                        }
                     }
                 }
             }
 
 
-            else if (!isFastFalling)
+            else if (!isFastFalling && !isOnRope)
             {
                 VerticalVelocity += MoveStats.Gravity * MoveStats.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
             }
 
             else if (VerticalVelocity < 0f)
             {
-                if (!isFalling)
+                if (!isFalling && !isOnRope)
                 {
                     isFalling = true;
                 }
@@ -168,7 +181,7 @@ public class PlayerController : NetworkBehaviour
 
 
         }
-        if (isFastFalling)
+        if (isFastFalling && !isOnRope)
         {
             if (fastFallTime >= MoveStats.TimeForUpwardsCancel)
             {
@@ -182,7 +195,7 @@ public class PlayerController : NetworkBehaviour
             fastFallTime += Time.fixedDeltaTime;
         }
 
-        if (!isGrounded && !isJumping)
+        if (!isGrounded && !isJumping && !isOnRope)
         {
             if (isFalling)
             {
@@ -314,21 +327,48 @@ public class PlayerController : NetworkBehaviour
             Vector2 targetVelocity = Vector2.zero;
             if (InputManager.RunIsHeld)
             {
-                targetVelocity = new Vector2(moveInput.x, 0f) * MoveStats.MaxRunSpeed;
+                if (isOnRope)
+                {
+                    targetVelocity = new Vector2(moveInput.x, moveInput.y) * MoveStats.MaxRunSpeed;
+                }
+                else
+                {
+                    targetVelocity = new Vector2(moveInput.x, 0f) * MoveStats.MaxRunSpeed;
+                }
             }
             else
             {
-                targetVelocity = new Vector2(moveInput.x, 0f) * MoveStats.MaxWalkSpeed;
+                if (isOnRope)
+                {
+                    targetVelocity = new Vector2(moveInput.x, moveInput.y) * MoveStats.MaxWalkSpeed;
+                }
+                else
+                {
+                    targetVelocity = new Vector2(moveInput.x, 0f) * MoveStats.MaxWalkSpeed;
+                }
             }
 
             moveVelocity = Vector2.Lerp(moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-            rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
-            //rb2.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
+            if (!isOnRope)
+            {
+                rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(moveVelocity.x, moveVelocity.y);
+            }
         }
         else if (moveInput == Vector2.zero)
         {
             moveVelocity = Vector2.Lerp(moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
-            rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
+            if (!isOnRope)
+            {
+                rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(moveVelocity.x, moveVelocity.y);
+            }
         }
 
     }
@@ -464,7 +504,7 @@ public class PlayerController : NetworkBehaviour
         Vector2 boxCastSize = new Vector2(feetCol.bounds.size.x * MoveStats.HeadWidth, MoveStats.HeadDetectionRayLength);
 
         headHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.up, MoveStats.HeadDetectionRayLength, MoveStats.GroundLayer);
-        if (headHit.collider != null)
+        if (headHit.collider != null && headHit.collider.GetComponent<DestructibleTile>() != null)
         {
             bumpedHead = true;
         }
@@ -521,7 +561,7 @@ public class PlayerController : NetworkBehaviour
         }
         else if (isScout)
         {
-            GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
+            GameObject effect = Instantiate(LightAbility, transform.position, Quaternion.identity);
             effect.GetComponent<NetworkObject>().Spawn();
         }
         if (!isCharging)
