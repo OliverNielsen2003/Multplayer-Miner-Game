@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MaxHealth: 4
+  MaxHealth: 5
   spriteRenderer: {fileID: 7996990441868426714}
   ReplacementTile: {fileID: 8514965493473313411, guid: d16aac30e49a3cf4c8c861fed55a058e, type: 3}
   destructionResidue: {fileID: 5685102215054434671, guid: 4e528cffca0239648a1c067cf47f1c7a, type: 3}

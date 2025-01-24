@@ -417,6 +417,14 @@ public class PlayerController : NetworkBehaviour
     private void SpawnSwingObjectServerRpc(Quaternion swingRotation)
     {
         GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
+        if (isDigger)
+        {
+            swingEffect.GetComponentInChildren<SwingAttack>().damage = 2;
+        }
+        else
+        {
+            swingEffect.GetComponentInChildren<SwingAttack>().damage = 1;
+        }
 
         NetworkObject networkObject = swingEffect.GetComponent<NetworkObject>();
         networkObject.Spawn();

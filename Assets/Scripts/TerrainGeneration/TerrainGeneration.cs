@@ -162,7 +162,8 @@ public class TerrainGeneration : NetworkBehaviour
         }
     }
 
-    private void SpawnTile(GameObject prefab, int x, int y)
+
+    public void SpawnTile(GameObject prefab, int x, int y)
     {
         if (!IsServer) return; // Only the server spawns tiles
 
@@ -182,7 +183,7 @@ public class TerrainGeneration : NetworkBehaviour
         decor.transform.SetParent(parentBlock.transform);
     }
 
-    private GameObject GetTileAtPosition(int x, int y)
+    public GameObject GetTileAtPosition(int x, int y)
     {
         Vector3 position = new Vector3(x * tileSize, y * tileSize, 0);
         Collider2D[] colliders = Physics2D.OverlapPointAll(position);

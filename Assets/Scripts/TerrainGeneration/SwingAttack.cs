@@ -3,15 +3,16 @@ using Unity.Netcode;
 
 public class SwingAttack : NetworkBehaviour
 {
+    public int damage = 1;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<DestructibleTile>())
         {
-            // Request the server to apply damage
             var destructibleTile = other.GetComponent<NetworkObject>();
             if (destructibleTile != null && IsOwner)
             {
-                ApplyDamageServerRpc(destructibleTile.NetworkObjectId, 1); // Example: 1 damage
+                ApplyDamageServerRpc(destructibleTile.NetworkObjectId, damage);
             }
         }
     }
