@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  damage: 0
 --- !u!50 &2525766588987475853
 Rigidbody2D:
   serializedVersion: 5

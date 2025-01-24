@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
+using JetBrains.Annotations;
 
 public class RopeAibility : NetworkBehaviour
 {
@@ -51,7 +52,6 @@ public class RopeAibility : NetworkBehaviour
             {
                 if (ActiveTile == generator.GetTileAtPosition(x, y, true))
                 {
-                    Debug.Log("Found Active Tile");
                     GameObject currentBlock = generator.GetTileAtPosition(x, y + repeats, true);
                     if (currentBlock != null && currentBlock.GetComponent<TileNode>() != null)
                     {

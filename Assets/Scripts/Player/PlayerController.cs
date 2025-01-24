@@ -73,18 +73,21 @@ public class PlayerController : NetworkBehaviour
         rb2 = GetComponent<NetworkRigidbody2D>();
         CirlceAnim.SetActive(false);
 
-        if (IsServer)
-        {
-            isDigger = true;
-        }
-        else
-        {
-            isScout = true;
-        }
     }
 
     private void Update()
     {
+        if (IsServer)
+        {
+            isDigger = true;
+            isScout = false;
+        }
+        else
+        {
+            isScout = true;
+            isDigger = false;
+        }
+
         if (isScout)
         {
             MoveStats = ScoutMoveStats;
