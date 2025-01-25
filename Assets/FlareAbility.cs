@@ -7,6 +7,7 @@ public class FlareAbility : NetworkBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     public GameObject Effect;
+    public bool isFacingRight = true;
 
     public GameObject Flare;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,8 +21,7 @@ public class FlareAbility : NetworkBehaviour
         col = GetComponent<CapsuleCollider2D>();
 
         Vector3 direction = Random.insideUnitCircle.normalized;
-        GameObject Player = GameObject.FindGameObjectWithTag("Player");
-        if (Player.GetComponent<PlayerController>().isFacingRight)
+        if (isFacingRight)
         {
             rb.AddForce(new Vector2(0.65f, 0.65f) * 5f, ForceMode2D.Impulse);
         }

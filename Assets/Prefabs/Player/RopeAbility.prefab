@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7774631841233430035}
   - component: {fileID: 9031238850352172195}
   - component: {fileID: 6330632014134815669}
+  - component: {fileID: -356562407329329211}
   m_Layer: 0
   m_Name: RopeAbility
   m_TagString: Untagged
@@ -103,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3908355251
+  GlobalObjectIdHash: 12334496
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -170,7 +171,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0031994432, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -180,7 +181,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.12673095, y: 0.5}
+  m_Size: {x: 0.13, y: 0.51}
   m_EdgeRadius: 0
 --- !u!50 &6330632014134815669
 Rigidbody2D:
@@ -209,3 +210,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &-356562407329329211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627418425785486521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d69733394371c4e9be0f015bb42af1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  MaxHealth: 2
+  spriteRenderer: {fileID: 7178469616958462875}
+  ReplacementTile: {fileID: 0}
+  destructionResidue: {fileID: 0}
+  destructionEffect: {fileID: 0}
+  normal: {fileID: 21300000, guid: 1ecbe45762f5aa549bcebf2f778e9d90, type: 3}
+  hurt: {fileID: 21300000, guid: 1ecbe45762f5aa549bcebf2f778e9d90, type: 3}
+  damaged: {fileID: 21300000, guid: 1ecbe45762f5aa549bcebf2f778e9d90, type: 3}
+  hitSound: {fileID: 8300000, guid: 4109dca9ba36a0245877371dced627b7, type: 3}
+  breakSound: {fileID: 8300000, guid: 4109dca9ba36a0245877371dced627b7, type: 3}

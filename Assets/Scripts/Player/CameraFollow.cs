@@ -15,6 +15,7 @@ public class CameraFollow : NetworkBehaviour
         GetComponent<PlayerController>().enabled = false;
         //transform.GetChild(4).gameObject.GetComponent<Animator>().enabled = false;
         GetComponent<PlayerInput>().enabled = false;
+
     }
     void Update()
     {

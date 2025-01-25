@@ -72,22 +72,10 @@ public class PlayerController : NetworkBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb2 = GetComponent<NetworkRigidbody2D>();
         CirlceAnim.SetActive(false);
-
     }
 
     private void Update()
     {
-        if (IsServer)
-        {
-            isDigger = true;
-            isScout = false;
-        }
-        else
-        {
-            isScout = true;
-            isDigger = false;
-        }
-
         if (isScout)
         {
             MoveStats = ScoutMoveStats;
@@ -544,11 +532,24 @@ public class PlayerController : NetworkBehaviour
         AbilityUses++;
         CirlceAnim.SetActive(false);
         isCharging = false;
-        if (AbilityUses < 3)
+        if (isScout)
         {
-            if (!isCharging)
+            if (AbilityUses < 3)
             {
-                StartCoroutine(RechargeAbility());
+                if (!isCharging)
+                {
+                    StartCoroutine(RechargeAbility());
+                }
+            }
+        }
+        else if (isDigger)
+        {
+            if (AbilityUses < 1)
+            {
+                if (!isCharging)
+                {
+                    StartCoroutine(RechargeAbility());
+                }
             }
         }
     }
@@ -556,7 +557,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void PerformAbilityClientRpc()
     {
-        AbilityUses--;
+        AbilityUses = AbilityUses - 1;
         if (isDigger)
         {
             GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
@@ -565,6 +566,7 @@ public class PlayerController : NetworkBehaviour
         else if (isScout)
         {
             GameObject effect = Instantiate(LightAbility, transform.position, Quaternion.identity);
+            effect.GetComponent<FlareAbility>().isFacingRight = isFacingRight;
             effect.GetComponent<NetworkObject>().Spawn();
         }
         if (!isCharging)
