@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9091754779161298297}
   - component: {fileID: 6114305974878510599}
   - component: {fileID: 4260411879675348694}
+  - component: {fileID: 276532548401224198}
   - component: {fileID: 449982713110907445}
   m_Layer: 7
   m_Name: Effect
@@ -4843,6 +4844,31 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &276532548401224198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3920686198360852175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3827570570
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &449982713110907445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4855,4 +4881,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888ec78ec928e84479dc15cd3ba009d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   pos: {fileID: 0}

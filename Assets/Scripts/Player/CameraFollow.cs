@@ -13,7 +13,6 @@ public class CameraFollow : NetworkBehaviour
 
         Camera.GetComponent<Camera>().enabled = false;
         GetComponent<PlayerController>().enabled = false;
-        //transform.GetChild(4).gameObject.GetComponent<Animator>().enabled = false;
         GetComponent<PlayerInput>().enabled = false;
 
     }

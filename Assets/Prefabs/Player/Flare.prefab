@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Effect: {fileID: 3920686198360852175, guid: e77eb5d924080064e8b52b46c4aa6a4a, type: 3}
-  Flare: {fileID: 0}
+  isFacingRight: 1
 --- !u!1 &9158730750767721415
 GameObject:
   m_ObjectHideFlags: 0

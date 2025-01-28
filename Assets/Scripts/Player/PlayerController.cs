@@ -56,10 +56,7 @@ public class PlayerController : NetworkBehaviour
     private float coyoteTimer;
 
     //Character Selection
-    public bool isScout = false;
-    public bool isDigger = false;
-    public PlayerMovementStats DiggerMoveStats;
-    public PlayerMovementStats ScoutMoveStats;
+    public NetworkVariable<bool> isScout = new NetworkVariable<bool>();
     public GameObject RopeAbility;
     public GameObject LightAbility;
     public int AbilityUses = 3;
@@ -76,13 +73,13 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        if (isScout)
+                if (IsLocalPlayer)
         {
-            MoveStats = ScoutMoveStats;
+            isScout.Value = true;
         }
-        else if (isDigger)
+        else
         {
-            MoveStats = DiggerMoveStats;
+            isScout.Value = false;
         }
         CountTimers();
         JumpChecks();
@@ -448,7 +445,7 @@ public class PlayerController : NetworkBehaviour
     private void SpawnSwingObjectServerRpc(Quaternion swingRotation)
     {
         GameObject swingEffect = Instantiate(swingObjectPrefab, transform.position, swingRotation);
-        if (isDigger)
+        if (!isScout.Value)
         {
             swingEffect.GetComponentInChildren<SwingAttack>().damage = 2;
         }
@@ -528,11 +525,18 @@ public class PlayerController : NetworkBehaviour
         CirlceAnim.SetActive(true);
         CirlceAnim.GetComponent<Animator>().SetTrigger("Ability");
         isCharging = true;
-        yield return new WaitForSeconds(3f);
+        if (isScout.Value)
+        {
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(10f);
+        }
         AbilityUses++;
         CirlceAnim.SetActive(false);
         isCharging = false;
-        if (isScout)
+        if (!isScout.Value)
         {
             if (AbilityUses < 3)
             {
@@ -542,7 +546,7 @@ public class PlayerController : NetworkBehaviour
                 }
             }
         }
-        else if (isDigger)
+        else
         {
             if (AbilityUses < 1)
             {
@@ -557,17 +561,25 @@ public class PlayerController : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void PerformAbilityClientRpc()
     {
-        AbilityUses = AbilityUses - 1;
-        if (isDigger)
+        AbilityUses--; ;
+        if (!isScout.Value)
         {
             GameObject effect = Instantiate(RopeAbility, transform.position, Quaternion.identity);
             effect.GetComponent<NetworkObject>().Spawn();
         }
-        else if (isScout)
+        else
         {
             GameObject effect = Instantiate(LightAbility, transform.position, Quaternion.identity);
-            effect.GetComponent<FlareAbility>().isFacingRight = isFacingRight;
             effect.GetComponent<NetworkObject>().Spawn();
+            if (isFacingRight)
+            {
+                effect.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.65f, 0.65f) * 5f, ForceMode2D.Impulse);
+            }
+            else
+            {
+                effect.GetComponent<Rigidbody2D>().AddForce(new Vector2(-0.65f, 0.65f) * 5f, ForceMode2D.Impulse);
+            }
+            effect.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-0.35f, 0.35f), ForceMode2D.Impulse);
         }
         if (!isCharging)
         {

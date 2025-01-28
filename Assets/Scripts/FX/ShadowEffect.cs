@@ -1,15 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ShadowEffect : MonoBehaviour
+public class ShadowEffect : NetworkBehaviour
 {
     public Transform pos;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
+    public void Awake()
+    {
+        StartCoroutine(Death());
+    }
     void Update()
     {
-        transform.position = pos.position;
+        //transform.position = pos.position;
+    }
+
+    IEnumerator Death()
+    {
+        yield return new WaitForSecondsRealtime(10f);
+        DeathClientRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    public void DeathClientRpc()
+    {
+        Destroy(gameObject);
     }
 }

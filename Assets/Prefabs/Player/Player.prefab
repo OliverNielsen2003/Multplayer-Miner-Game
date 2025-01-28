@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 681716664
+  GlobalObjectIdHash: 548599247
   InScenePlacedSourceGlobalObjectIdHash: 548599247
   DeferredDespawnTick: 0
   Ownership: 1
@@ -466,10 +466,8 @@ MonoBehaviour:
   isSwinging: 0
   swingObjectPrefab: {fileID: 1538007990774373606, guid: a87a5cc001fe1744a9e75282a8623630, type: 3}
   anim: {fileID: 7646908882665767336}
-  isScout: 0
-  isDigger: 0
-  DiggerMoveStats: {fileID: 11400000, guid: 1f2336eb848d5ec4eb84ebc2dccebc7c, type: 2}
-  ScoutMoveStats: {fileID: 11400000, guid: e7155d29752fd04428cab778c0e31d74, type: 2}
+  isScout:
+    m_InternalValue: 0
   RopeAbility: {fileID: 627418425785486521, guid: 5687b5488c0f3f4479c24282773fdb64, type: 3}
   LightAbility: {fileID: 8506997422503877751, guid: 38bc8eefe5da7d949b5e330e198585f8, type: 3}
   AbilityUses: 3
