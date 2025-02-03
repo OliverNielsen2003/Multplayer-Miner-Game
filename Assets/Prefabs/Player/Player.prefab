@@ -96,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 1823106180579236424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.028, y: -0.088, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -189,6 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8030900771451149140}
   - component: {fileID: 6502702698642084878}
+  - component: {fileID: 4324331844590739453}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -258,6 +259,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 4589341297105553156}
+--- !u!114 &4324331844590739453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008527104857251824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2622068364801491370
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 548599247
+  GlobalObjectIdHash: 681716664
   InScenePlacedSourceGlobalObjectIdHash: 548599247
   DeferredDespawnTick: 0
   Ownership: 1
@@ -981,19 +994,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0.00090826524
+      value: 0.0009718173
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.019801982
+      value: 0.037996545
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 1.3297004
+      value: 1.3586006
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.7128713
+      value: 0.46632123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
