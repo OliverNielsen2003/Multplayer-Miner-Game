@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2665740178377611841}
   - component: {fileID: 4652192557048942934}
   - component: {fileID: 161939432843571886}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RopeAbility 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

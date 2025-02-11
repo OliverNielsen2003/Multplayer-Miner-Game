@@ -28,22 +28,6 @@ public class RopeAibility : NetworkBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            other.GetComponent<PlayerController>().isOnRope = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            other.GetComponent<PlayerController>().isOnRope = false;
-        }
-    }
-
     public void FindRopeAbility(int repeats)
     {
         for (int x = 0; x < 100; x++)

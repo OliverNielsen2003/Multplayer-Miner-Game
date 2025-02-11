@@ -63,6 +63,8 @@ public class PlayerController : NetworkBehaviour
     private bool isCharging = false;
     public GameObject CirlceAnim;
 
+    public LayerMask RopeLayer;
+
     private void Awake()
     {
         isFacingRight = true;
@@ -502,10 +504,27 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    private void IsOnRope()
+    {
+        Vector2 boxCastOrigin = new Vector2(bodyCol.bounds.center.x, bodyCol.bounds.min.y);
+        Vector2 boxCastSize = new Vector2(bodyCol.bounds.size.x, bodyCol.bounds.size.y);
+
+        groundHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.zero, 0.5f, RopeLayer);
+        if (groundHit.collider != null)
+        {
+            isOnRope = true;
+        }
+        else
+        {
+            isOnRope = false;
+        }
+    }
+
     private void CollisionChecks()
     {
         IsGrounded();
         BumpedHead();
+        IsOnRope();
     }
 
     #endregion

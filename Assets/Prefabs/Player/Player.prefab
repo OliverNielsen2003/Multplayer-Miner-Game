@@ -485,6 +485,9 @@ MonoBehaviour:
   LightAbility: {fileID: 8506997422503877751, guid: 38bc8eefe5da7d949b5e330e198585f8, type: 3}
   AbilityUses: 3
   CirlceAnim: {fileID: 7263807567039822806}
+  RopeLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &7707604893017019671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,19 +997,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0.0009718173
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.037996545
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 1.3586006
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7010184241722477331, guid: dc296ef05f8187b4fa47d1b3990b3235, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.46632123
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
