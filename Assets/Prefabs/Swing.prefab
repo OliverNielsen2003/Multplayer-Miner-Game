@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   isAttack: 1
-  isMoney: 1
+  isMoney: 0
 --- !u!114 &2333144759176291350
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class SwingAttack : NetworkBehaviour
             var destructibleTile = other.GetComponent<NetworkObject>();
             if (destructibleTile != null && IsOwner)
             {
+                GetComponent<CircleCollider2D>().enabled = false;
                 ApplyDamageServerRpc(destructibleTile.NetworkObjectId, damage);
             }
         }

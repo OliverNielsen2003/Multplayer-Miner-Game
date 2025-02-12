@@ -26,6 +26,8 @@ public class DestroyDrops : NetworkBehaviour
             Vector3 direction = Random.insideUnitCircle.normalized;
             rb.AddForce(-direction, ForceMode2D.Impulse);
         }
+
+        
     }
 
     public void OnCollisionEnter2D(Collision2D other)
@@ -35,6 +37,9 @@ public class DestroyDrops : NetworkBehaviour
             DeathClientRpc();
             GameObject.FindAnyObjectByType<AudioManager>().PlaySFX(GameObject.FindAnyObjectByType<AudioManager>().Clips[3], true);
         }
-       // GameObject.FindAnyObjectByType<AudioManager>().PlaySFX(GameObject.FindAnyObjectByType<AudioManager>().Clips[2], true);
+        else if (isAttack && other.transform.GetComponent<DestructibleTile>() != null)
+        {
+            col.enabled = false;
+        }
     }
 }
